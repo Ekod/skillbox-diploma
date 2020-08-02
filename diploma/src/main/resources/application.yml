@@ -1,8 +1,0 @@
-spring:
-  datasource:
-    url: jdbc:mysql://localhost:3306/skillbox?useSSL=false&serverTimezone=Europe/Moscow
-    username: root
-    password: 7r4f78i7eEkod
-  jpa:
-    hibernate:
-      ddl-auto: update

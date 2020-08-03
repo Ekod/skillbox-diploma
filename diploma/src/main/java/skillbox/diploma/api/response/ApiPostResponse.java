@@ -1,12 +1,11 @@
-package skillbox.diploma.response;
+package skillbox.diploma.api.response;
 
 import lombok.Data;
-import skillbox.diploma.model.Posts;
 
 import java.util.List;
 
 @Data
 public class ApiPostResponse {
     private int count;
-    private List<Posts> posts;
+    private List<ForApiPostResponse> posts;
 }

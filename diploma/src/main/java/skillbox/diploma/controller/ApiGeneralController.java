@@ -14,7 +14,7 @@ public class ApiGeneralController {
     InitRequestConfig initRequestConfig;
 
     @GetMapping("/init")
-    public InitRequestConfig showInit() {
+    public InitRequestConfig init() {
         return initRequestConfig;
     }
 }

@@ -5,8 +5,8 @@ import lombok.Setter;
 
 import javax.persistence.Entity;
 
-@Entity(name = "post_comments")
+@Entity(name = "global_settings")
 @Getter
 @Setter
-public class PostComment {
+public class GlobalSettings {
 }

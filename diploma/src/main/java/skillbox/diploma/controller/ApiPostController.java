@@ -1,6 +1,8 @@
 package skillbox.diploma.controller;
 
 import lombok.AllArgsConstructor;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,13 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 @AllArgsConstructor
 public class ApiPostController {
 
-    public void getPosts(@RequestParam int offset,
-                         @RequestParam int limit,
-                         @RequestParam int mode,
-                         @RequestParam int recent,
-                         @RequestParam int popular,
-                         @RequestParam int best,
-                         @RequestParam int early
+    @GetMapping("/{mode}")
+    public void getPosts(@RequestParam(name = "offset", defaultValue = "0") int offset,
+                         @RequestParam(name = "limit", defaultValue = "20") int limit,
+                         @PathVariable String mode
     ) {
 
     }

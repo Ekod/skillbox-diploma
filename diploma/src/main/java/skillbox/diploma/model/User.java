@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -43,8 +44,11 @@ public class User {
     private String code;
 
     @Lob
-    private Byte[] photo;
+    private String photo;
 
-    @OneToMany(mappedBy = "user")
-    private List<Posts> posts;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    private List<Post> posts;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    private List<PostComment> postComments;
 }

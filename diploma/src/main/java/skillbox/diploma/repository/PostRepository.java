@@ -2,8 +2,8 @@ package skillbox.diploma.repository;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
-import skillbox.diploma.model.Posts;
+import skillbox.diploma.model.Post;
 
 @Repository
-public interface PostsRepository extends CrudRepository<Posts, Integer> {
+public interface PostRepository extends CrudRepository<Post, Integer> {
 }

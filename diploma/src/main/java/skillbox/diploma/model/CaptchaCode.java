@@ -24,10 +24,11 @@ public class CaptchaCode {
     private Timestamp time;
 
     @NotNull
-    private String code; //<----в БД должен быть тип TINYTEXT, но не нашёл подходящего типа или аннотации в Java
+    @Column(columnDefinition = "tinytext")
+    private String code;
 
     @NotNull
-    @Column(name = "secret_code")
-    private String secretCode; //<----в БД должен быть тип TINYTEXT, но не нашёл подходящего типа или аннотации в Java
+    @Column(name = "secret_code", columnDefinition = "tinytext")
+    private String secretCode;
 
 }

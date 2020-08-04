@@ -33,7 +33,7 @@ public class PostServiceImpl implements PostService {
 //            forApiPostResponse.setLikeCount();
 //            forApiPostResponse.setDislikeCount();
 //            forApiPostResponse.setCommentCount();
-//            forApiPostResponse.setViewCount();
+            forApiPostResponse.setViewCount(post.getViewCount());
 
             listOfPosts.add(forApiPostResponse);
         }

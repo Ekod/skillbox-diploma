@@ -44,8 +44,11 @@ public class User {
     private String code;
 
     @Lob
-    private Byte[] photo;
+    private String photo;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private List<Post> posts;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    private List<PostComment> postComments;
 }

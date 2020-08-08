@@ -1,7 +1,7 @@
 package skillbox.diploma.service;
 
-import skillbox.diploma.api.response.ApiPostResponse;
+import skillbox.diploma.api.response.PostResponse;
 
 public interface PostService {
-    ApiPostResponse getPosts();
+    PostResponse getPosts();
 }

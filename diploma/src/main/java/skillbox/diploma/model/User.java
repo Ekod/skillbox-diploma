@@ -49,6 +49,9 @@ public class User {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private List<Post> posts;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    @OneToMany(mappedBy = "post")
+    private List<PostVote> postVotes;
+
+    @OneToMany(mappedBy = "post")
     private List<PostComment> postComments;
 }

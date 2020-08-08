@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="skillbox@localhost" uuid="c9c033ac-9d97-43da-a188-a618179abc25">
+    <data-source source="LOCAL" name="diploma@localhost" uuid="959250f1-70f9-4453-8219-0833adcab663">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://localhost:3306/skillbox</jdbc-url>
-      <driver-properties>
-        <property name="serverTimezone" value="UTC" />
-      </driver-properties>
+      <jdbc-url>jdbc:mysql://localhost:3306/diploma?useSSL=false&amp;serverTimezone=UTC</jdbc-url>
     </data-source>
   </component>
 </project>

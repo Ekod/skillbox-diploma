@@ -6,6 +6,7 @@ import lombok.Setter;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
@@ -24,10 +25,12 @@ public class PostComment {
 
     @NotNull
     @ManyToOne
+    @JoinColumn(name = "postComments")
     private Post post;
 
     @NotNull
     @ManyToOne
+    @JoinColumn(name = "postComments")
     private User user;
 
     @NotNull

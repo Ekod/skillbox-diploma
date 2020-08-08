@@ -3,11 +3,12 @@ package skillbox.diploma.model;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 
@@ -21,12 +22,14 @@ public class PostVote {
     private int id;
 
     @NotNull
-    @Column(name = "user_id")
-    private int userId;
+    @ManyToOne
+    @JoinColumn(name = "postVotes")
+    private User user;
 
     @NotNull
-    @Column(name = "post_id")
-    private int postId;
+    @ManyToOne
+    @JoinColumn(name = "postVotes")
+    private Post post;
 
     @NotNull
     private Timestamp time;

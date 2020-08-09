@@ -6,6 +6,10 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+    dialect:
+      org:
+        hibernate:
+          dialect: MySQL8Dialect
 ---
 title: DevPub
 subtitle: Рассказы разработчиков

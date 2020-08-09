@@ -32,7 +32,7 @@ public class Post {
 
     @Enumerated(EnumType.STRING)
     @NotNull
-    @Column(name = "moderation_status", columnDefinition = "enum default 'NEW'")
+    @Column(length = 32, name = "moderation_status", columnDefinition = "varchar(32) default 'NEW'")
     private PostTypes moderationStatus;
 
     @Column(name = "moderator_id")
@@ -56,9 +56,9 @@ public class Post {
     @NotNull
     private int viewCount;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "post")
     private List<PostVote> postVotes;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "post")
     private List<PostComment> postComments;
 }

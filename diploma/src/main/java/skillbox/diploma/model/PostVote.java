@@ -24,11 +24,6 @@ public class PostVote {
     @NotNull
     @ManyToOne
     @JoinColumn(name = "postVotes")
-    private User user;
-
-    @NotNull
-    @ManyToOne
-    @JoinColumn(name = "postVotes")
     private Post post;
 
     @NotNull

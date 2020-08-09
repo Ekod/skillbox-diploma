@@ -14,6 +14,8 @@ import java.util.ArrayList;
 @Service
 @AllArgsConstructor
 public class PostServiceImpl implements PostService {
+    private final int LIKE_VALUE = 1;
+    private final int DISLIKE_VALUE = -1;
 
     PostRepository postRepository;
 
@@ -23,21 +25,43 @@ public class PostServiceImpl implements PostService {
         ArrayList<PostResponseList> listOfPosts = new ArrayList<>();
         Iterable<Post> allPosts = postRepository.findAll();
         for (Post post : allPosts) {
-            PostResponseList postResponseList = new PostResponseList();
-            postResponseList.setId(post.getId());
-            postResponseList.setTimestamp(post.getTime());
-            postResponseList.setUser(new PostResponseListUser(post.getUser().getId(), post.getUser().getName()));
-            postResponseList.setTitle(post.getTitle());
-            postResponseList.setAnnounce(post.getText());
-            postResponseList.setLikeCount((int) post.getPostVotes().stream().filter(vote -> vote.getValue() == 1).count());
-            postResponseList.setDislikeCount((int) post.getPostVotes().stream().filter(vote -> vote.getValue() == -1).count());
-            postResponseList.setCommentCount(post.getPostComments().size());
-            postResponseList.setViewCount(post.getViewCount());
-
+            PostResponseList postResponseList = mapToPost(post);
             listOfPosts.add(postResponseList);
         }
         responsePost.setCount(listOfPosts.size());
         responsePost.setPosts(listOfPosts);
         return responsePost;
+    }
+
+    private PostResponseList mapToPost(Post post) {
+        return PostResponseList
+                .builder()
+                .id(post.getId())
+                .timestamp(post.getTime())
+                .user(constructUser(post))
+                .title(post.getTitle())
+                .announce(postAnnouncementCreator(post))
+                .likeCount(getLikesAndDislikes(post, LIKE_VALUE))
+                .dislikeCount(getLikesAndDislikes(post, DISLIKE_VALUE))
+                .commentCount(post.getPostComments().size())
+                .viewCount(post.getViewCount())
+                .build();
+    }
+
+    private int getLikesAndDislikes(Post post, int value) {
+        return (int) post.getPostVotes().stream().filter(vote -> vote.getValue() == value).count();
+    }
+
+    private PostResponseListUser constructUser(Post post) {
+        return PostResponseListUser
+                .builder()
+                .id(post.getUser().getId())
+                .name(post.getUser().getName())
+                .build();
+    }
+
+    private String postAnnouncementCreator(Post post) {
+        String htmlRemoverRegEx = "<[^>]*>";
+        return post.getText().replaceAll(htmlRemoverRegEx, "").trim().substring(0, 149);
     }
 }

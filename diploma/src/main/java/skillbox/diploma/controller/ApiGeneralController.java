@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import skillbox.diploma.api.response.SettingsResponse;
+import skillbox.diploma.api.response.TagResponse;
 import skillbox.diploma.config.InitRequestConfig;
 
 @RestController
@@ -13,8 +15,23 @@ public class ApiGeneralController {
 
     InitRequestConfig initRequestConfig;
 
+
     @GetMapping("/init")
     public InitRequestConfig init() {
         return initRequestConfig;
+    }
+
+    @GetMapping("/tag")
+    public TagResponse getTags() {
+        return new TagResponse();
+    }
+
+    @GetMapping("/settings")
+    public SettingsResponse getSettings() {
+        return new SettingsResponse(
+                false,
+                false,
+                false
+        );
     }
 }

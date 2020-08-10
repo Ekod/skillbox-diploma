@@ -23,7 +23,7 @@ public class PostVote {
 
     @NotNull
     @ManyToOne
-    @JoinColumn(name = "postVotes")
+    @JoinColumn(name = "post_id")
     private Post post;
 
     @NotNull

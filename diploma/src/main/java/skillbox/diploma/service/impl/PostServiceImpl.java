@@ -1,6 +1,9 @@
 package skillbox.diploma.service.impl;
 
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import skillbox.diploma.api.response.PostResponse;
 import skillbox.diploma.api.response.PostResponseList;
@@ -20,10 +23,11 @@ public class PostServiceImpl implements PostService {
     PostRepository postRepository;
 
     @Override
-    public PostResponse getPosts() {
+    public PostResponse getPosts(int offset, int limit, String mode) {
+        Pageable pageable = PageRequest.of(offset, limit, sortRequest(mode));
         PostResponse responsePost = new PostResponse();
         ArrayList<PostResponseList> listOfPosts = new ArrayList<>();
-        Iterable<Post> allPosts = postRepository.findAll();
+        Iterable<Post> allPosts = postRepository.findAll(pageable);
         for (Post post : allPosts) {
             PostResponseList postResponseList = mapToPost(post);
             listOfPosts.add(postResponseList);
@@ -32,6 +36,7 @@ public class PostServiceImpl implements PostService {
         responsePost.setPosts(listOfPosts);
         return responsePost;
     }
+
 
     private PostResponseList mapToPost(Post post) {
         return PostResponseList
@@ -46,6 +51,21 @@ public class PostServiceImpl implements PostService {
                 .commentCount(post.getPostComments().size())
                 .viewCount(post.getViewCount())
                 .build();
+    }
+
+    private Sort sortRequest(String mode) {
+        switch (mode) {
+            case "recent":
+                return Sort.by("time").descending();
+            case "popular":
+                return Sort.by("");
+            case "best":
+                return Sort.by("");
+            case "early":
+                return Sort.by("time").ascending();
+            default:
+                return null;
+        }
     }
 
     private int getLikesAndDislikes(Post post, int value) {
@@ -64,4 +84,20 @@ public class PostServiceImpl implements PostService {
         String htmlRemoverRegEx = "<[^>]*>";
         return post.getText().replaceAll(htmlRemoverRegEx, "").trim().substring(0, 149);
     }
+
+    @Override
+    public PostResponse getPostsSearch(int offset, int limit, String query) {
+        return null;
+    }
+
+    @Override
+    public PostResponse getPostsDate(int offset, int limit, String date) {
+        return null;
+    }
+
+    @Override
+    public PostResponse getPostsTag(int offset, int limit, String tag) {
+        return null;
+    }
+
 }

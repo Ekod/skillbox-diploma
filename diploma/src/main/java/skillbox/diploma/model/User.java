@@ -50,8 +50,5 @@ public class User {
     private List<Post> posts;
 
     @OneToMany(mappedBy = "post")
-    private List<PostVote> postVotes;
-
-    @OneToMany(mappedBy = "post")
     private List<PostComment> postComments;
 }

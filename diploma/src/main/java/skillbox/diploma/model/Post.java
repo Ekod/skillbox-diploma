@@ -11,7 +11,10 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
@@ -31,8 +34,7 @@ public class Post {
     private byte isActive;
 
     @Enumerated(EnumType.STRING)
-    @NotNull
-    @Column(length = 32, name = "moderation_status", columnDefinition = "varchar(32) default 'NEW'")
+    @Column(length = 32, name = "moderation_status", columnDefinition = "varchar(32) default'NEW'")
     private PostTypes moderationStatus;
 
     @Column(name = "moderator_id")
@@ -61,4 +63,11 @@ public class Post {
 
     @OneToMany(mappedBy = "post")
     private List<PostComment> postComments;
+
+    @ManyToMany
+    @JoinTable(name = "tag2post",
+            joinColumns = @JoinColumn(name = "post_id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id")
+    )
+    private List<Tag> tagList;
 }

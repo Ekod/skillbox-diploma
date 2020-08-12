@@ -1,12 +1,3 @@
-drop table if exists captcha_codes;
-drop table if exists global_settings;
-drop table if exists post_comments;
-drop table if exists post_votes;
-drop table if exists posts;
-drop table if exists tag2post;
-drop table if exists tags;
-drop table if exists users;
-
 create table captcha_codes
 (
     id          integer     not null auto_increment,
@@ -39,6 +30,7 @@ create table post_votes
     time    datetime(6) not null,
     value   tinyint     not null,
     post_id integer     not null,
+    user_id integer     not null,
     primary key (id)
 ) engine = InnoDB;
 create table posts
@@ -87,9 +79,11 @@ alter table post_comments
     add constraint FKsnxoecngu89u3fh4wdrgf0f2g foreign key (user_id) references users (id);
 alter table post_votes
     add constraint FK9jh5u17tmu1g7xnlxa77ilo3u foreign key (post_id) references posts (id);
+alter table post_votes
+    add constraint FK9q09ho9p8fmo6rcysnci8rocc foreign key (user_id) references users (id);
 alter table posts
     add constraint FK5lidm6cqbc7u4xhqpxm898qme foreign key (user_id) references users (id);
 alter table tag2post
-    add constraint FKjou6suf2w810t2u3l96uasw3r foreign key (tag_id) references tags (id);
-alter table tag2post
     add constraint FKpjoedhh4h917xf25el3odq20i foreign key (post_id) references posts (id);
+alter table tag2post
+    add constraint FKjou6suf2w810t2u3l96uasw3r foreign key (tag_id) references tags (id);

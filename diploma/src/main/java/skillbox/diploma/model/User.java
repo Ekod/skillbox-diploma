@@ -1,11 +1,14 @@
 package skillbox.diploma.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,6 +21,10 @@ import java.util.List;
 @Entity(name = "users")
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@EqualsAndHashCode
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,9 +53,13 @@ public class User {
     @Lob
     private String photo;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    @OneToMany(mappedBy = "user")
     private List<Post> posts;
 
     @OneToMany(mappedBy = "post")
     private List<PostComment> postComments;
+
+    @OneToMany(mappedBy = "user")
+    private List<PostVote> postVotes;
+
 }

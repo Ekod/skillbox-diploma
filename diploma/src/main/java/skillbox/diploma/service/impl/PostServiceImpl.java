@@ -13,6 +13,7 @@ import skillbox.diploma.repository.PostRepository;
 import skillbox.diploma.service.PostService;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -27,7 +28,7 @@ public class PostServiceImpl implements PostService {
         Pageable pageable = PageRequest.of(offset, limit, sortRequest(mode));
         PostResponse responsePost = new PostResponse();
         ArrayList<PostResponseList> listOfPosts = new ArrayList<>();
-        Iterable<Post> allPosts = postRepository.findAll(pageable);
+        Iterable<Post> allPosts = postRepository.findAllByIsActiveAndModerationStatus(pageable);
         for (Post post : allPosts) {
             PostResponseList postResponseList = mapToPost(post);
             listOfPosts.add(postResponseList);
@@ -37,7 +38,42 @@ public class PostServiceImpl implements PostService {
         return responsePost;
     }
 
+    @Override
+    public PostResponse getPostsSearch(int offset, int limit, String query) {
+        Pageable pageable = PageRequest.of(offset, limit);
+        PostResponse responsePost = new PostResponse();
+        ArrayList<PostResponseList> listOfPosts = new ArrayList<>();
+        List<Post> allPosts = postRepository.findAllByTitleOrTextAndIsActiveAndModerationStatus(query, pageable);
+        for (Post post : allPosts) {
+            PostResponseList postResponseList = mapToPost(post);
+            listOfPosts.add(postResponseList);
+        }
+        responsePost.setCount(listOfPosts.size());
+        responsePost.setPosts(listOfPosts);
+        return responsePost;
+    }
 
+    @Override
+    public PostResponse getPostsDate(int offset, int limit, String date) {
+        Pageable pageable = PageRequest.of(offset, limit);
+        PostResponse responsePost = new PostResponse();
+        ArrayList<PostResponseList> listOfPosts = new ArrayList<>();
+        List<Post> allPosts = postRepository.findAllByTimeAndIsActiveAndModerationStatus(date, pageable);
+        for (Post post : allPosts) {
+            PostResponseList postResponseList = mapToPost(post);
+            listOfPosts.add(postResponseList);
+        }
+        responsePost.setCount(listOfPosts.size());
+        responsePost.setPosts(listOfPosts);
+        return responsePost;
+    }
+
+    @Override
+    public PostResponse getPostsTag(int offset, int limit, String tag) {
+        return null;
+    }
+
+    //==============================Util methods=============================================================================
     private PostResponseList mapToPost(Post post) {
         return PostResponseList
                 .builder()
@@ -82,22 +118,12 @@ public class PostServiceImpl implements PostService {
 
     private String postAnnouncementCreator(Post post) {
         String htmlRemoverRegEx = "<[^>]*>";
-        return post.getText().replaceAll(htmlRemoverRegEx, "").trim().substring(0, 149);
+        String noHTMLAnnounce = post.getText().replaceAll(htmlRemoverRegEx, "").trim();
+        if (noHTMLAnnounce.length() > 150) {
+            return noHTMLAnnounce.substring(0, 149);
+        }
+        return noHTMLAnnounce;
     }
 
-    @Override
-    public PostResponse getPostsSearch(int offset, int limit, String query) {
-        return null;
-    }
-
-    @Override
-    public PostResponse getPostsDate(int offset, int limit, String date) {
-        return null;
-    }
-
-    @Override
-    public PostResponse getPostsTag(int offset, int limit, String tag) {
-        return null;
-    }
 
 }

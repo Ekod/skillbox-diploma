@@ -1,6 +1,10 @@
 package skillbox.diploma.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Column;
@@ -15,6 +19,10 @@ import java.sql.Timestamp;
 @Entity(name = "post_comments")
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@EqualsAndHashCode
 public class PostComment {
 
     @Id

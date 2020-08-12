@@ -1,6 +1,10 @@
 package skillbox.diploma.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import skillbox.diploma.model.enums.PostTypes;
 
@@ -24,6 +28,10 @@ import java.util.List;
 @Entity(name = "posts")
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@EqualsAndHashCode
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,7 +42,7 @@ public class Post {
     private byte isActive;
 
     @Enumerated(EnumType.STRING)
-    @Column(length = 32, name = "moderation_status", columnDefinition = "varchar(32) default'NEW'")
+    @Column(length = 32, name = "moderation_status", columnDefinition = "varchar(32) default 'NEW'")
     private PostTypes moderationStatus;
 
     @Column(name = "moderator_id")
@@ -42,6 +50,7 @@ public class Post {
 
     @NotNull
     @ManyToOne
+    @JoinColumn(name = "user_id")
     private User user;
 
     @NotNull
@@ -65,7 +74,8 @@ public class Post {
     private List<PostComment> postComments;
 
     @ManyToMany
-    @JoinTable(name = "tag2post",
+    @JoinTable(
+            name = "tag2post",
             joinColumns = @JoinColumn(name = "post_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id")
     )

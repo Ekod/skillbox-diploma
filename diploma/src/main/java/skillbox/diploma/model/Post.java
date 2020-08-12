@@ -1,6 +1,10 @@
 package skillbox.diploma.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import skillbox.diploma.model.enums.PostTypes;
 
@@ -11,7 +15,10 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
@@ -21,6 +28,10 @@ import java.util.List;
 @Entity(name = "posts")
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@EqualsAndHashCode
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,8 +42,7 @@ public class Post {
     private byte isActive;
 
     @Enumerated(EnumType.STRING)
-    @NotNull
-    @Column(name = "moderation_status", columnDefinition = "enum default 'NEW'")
+    @Column(length = 32, name = "moderation_status", columnDefinition = "varchar(32) default 'NEW'")
     private PostTypes moderationStatus;
 
     @Column(name = "moderator_id")
@@ -40,6 +50,7 @@ public class Post {
 
     @NotNull
     @ManyToOne
+    @JoinColumn(name = "user_id")
     private User user;
 
     @NotNull
@@ -56,9 +67,17 @@ public class Post {
     @NotNull
     private int viewCount;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "post")
     private List<PostVote> postVotes;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "post")
     private List<PostComment> postComments;
+
+    @ManyToMany
+    @JoinTable(
+            name = "tag2post",
+            joinColumns = @JoinColumn(name = "post_id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id")
+    )
+    private List<Tag> tagList;
 }

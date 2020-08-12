@@ -6,6 +6,11 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+    dialect:
+      org:
+        hibernate:
+          dialect: MySQL8Dialect
+    show-sql: true
 ---
 title: DevPub
 subtitle: Рассказы разработчиков
@@ -17,4 +22,12 @@ copyrightFrom: 2005
 MULTIUSER_MODE: false
 POST_PREMODERATION: false
 STATISTICS_IS_PUBLIC: false
+
+---
+flyway:
+  user: root
+  password: password
+  schemas: diploma
+  url: jdbc:mysql://localhost:3306/diploma?useSSL=false&serverTimezone=UTC
+  locations: filesystem:db/migration
 

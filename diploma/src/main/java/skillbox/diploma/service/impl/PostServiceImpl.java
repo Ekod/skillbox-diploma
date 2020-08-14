@@ -9,7 +9,9 @@ import skillbox.diploma.api.response.PostResponse;
 import skillbox.diploma.api.response.PostResponseList;
 import skillbox.diploma.api.response.PostResponseListUser;
 import skillbox.diploma.model.Post;
+import skillbox.diploma.model.Tag;
 import skillbox.diploma.repository.PostRepository;
+import skillbox.diploma.repository.TagRepository;
 import skillbox.diploma.service.PostService;
 
 import java.util.ArrayList;
@@ -22,6 +24,7 @@ public class PostServiceImpl implements PostService {
     private final int DISLIKE_VALUE = -1;
 
     PostRepository postRepository;
+    TagRepository tagRepository;
 
     @Override
     public PostResponse getPosts(int offset, int limit, String mode) {
@@ -70,7 +73,19 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public PostResponse getPostsTag(int offset, int limit, String tag) {
-        return null;
+        Pageable pageable = PageRequest.of(offset, limit);
+        PostResponse responsePost = new PostResponse();
+        ArrayList<PostResponseList> listOfPosts = new ArrayList<>();
+        List<Tag> tagList = tagRepository.findAllByName(tag, pageable);
+        for (Tag tags : tagList) {
+            tags.getPostList().stream().forEach(post -> {
+                PostResponseList postResponseList = mapToPost(post);
+                listOfPosts.add(postResponseList);
+            });
+        }
+        responsePost.setCount(listOfPosts.size());
+        responsePost.setPosts(listOfPosts);
+        return responsePost;
     }
 
     //==============================Util methods=============================================================================

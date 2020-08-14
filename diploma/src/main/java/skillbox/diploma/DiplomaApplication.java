@@ -19,7 +19,6 @@ import skillbox.diploma.repository.UserRepository;
 
 import java.sql.Timestamp;
 import java.time.Instant;
-import java.util.Arrays;
 
 @SpringBootApplication
 @AllArgsConstructor
@@ -141,35 +140,41 @@ public class DiplomaApplication {
                     .time(Timestamp.from(Instant.now()))
                     .user(user2)
                     .build();
-            userRepository.save(user1);
-            userRepository.save(user2);
-            postRepository.save(post1);
-            postRepository.save(post2);
-            tagRepository.saveAll(Arrays.asList(tag1, tag2));
-
-            user1.setPosts(Arrays.asList(post1));
-            user2.setPosts(Arrays.asList(post2));
-
-            userRepository.save(user1);
-            userRepository.save(user2);
-            postVoteRepository.saveAll(Arrays.asList(postVote1, postVote2));
-            user1.setPostVotes(Arrays.asList(postVote1));
-            user2.setPostVotes(Arrays.asList(postVote2));
-            postCommentRepository.saveAll(Arrays.asList(postComment1, postComment2));
-
-            user1.setPostComments(Arrays.asList(postComment1));
-            user2.setPostComments(Arrays.asList(postComment2));
-            post1.setPostComments(Arrays.asList(postComment1));
-            post1.setPostVotes(Arrays.asList(postVote1));
-            post2.setPostComments(Arrays.asList(postComment2));
-            post2.setPostVotes(Arrays.asList(postVote2));
-            userRepository.save(user1);
-            userRepository.save(user2);
-            postRepository.save(post1);
-            postRepository.save(post2);
-            tagRepository.saveAll(Arrays.asList(tag1, tag2));
-            postVoteRepository.saveAll(Arrays.asList(postVote1, postVote2));
-            postCommentRepository.saveAll(Arrays.asList(postComment1, postComment2));
+//            userRepository.save(user1);
+//            userRepository.save(user2);
+//            postRepository.save(post1);
+//            postRepository.save(post2);
+//            tagRepository.saveAll(Arrays.asList(tag1, tag2));
+//
+//            user1.setPosts(Arrays.asList(post1));
+//            user2.setPosts(Arrays.asList(post2));
+//
+//            userRepository.save(user1);
+//            userRepository.save(user2);
+//            postVoteRepository.saveAll(Arrays.asList(postVote1, postVote2));
+//            user1.setPostVotes(Arrays.asList(postVote1));
+//            user2.setPostVotes(Arrays.asList(postVote2));
+//            postCommentRepository.saveAll(Arrays.asList(postComment1, postComment2));
+//
+//            user1.setPostComments(Arrays.asList(postComment1));
+//            user2.setPostComments(Arrays.asList(postComment2));
+//            post1.setPostComments(Arrays.asList(postComment1));
+//            post1.setPostVotes(Arrays.asList(postVote1));
+//            post2.setPostComments(Arrays.asList(postComment2));
+//            post2.setPostVotes(Arrays.asList(postVote2));
+//            userRepository.save(user1);
+//            userRepository.save(user2);
+//            postRepository.save(post1);
+//            postRepository.save(post2);
+//            tagRepository.saveAll(Arrays.asList(tag1, tag2));
+//            postVoteRepository.saveAll(Arrays.asList(postVote1, postVote2));
+//            postCommentRepository.saveAll(Arrays.asList(postComment1, postComment2));
+//             post1.setTagList(Arrays.asList(tag1));
+//             post2.setTagList(Arrays.asList(tag2));
+//             postRepository.saveAll(Arrays.asList(post1, post2));
+//             tag1.setPostList(Arrays.asList(post1));
+//            tag2.setPostList(Arrays.asList(post2));
+//            tagRepository.saveAll(Arrays.asList(tag1, tag2));
 
 
         };

@@ -5,8 +5,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.sql.Timestamp;
-
 @Data
 @Builder
 @NoArgsConstructor
@@ -14,7 +12,7 @@ import java.sql.Timestamp;
 public class PostResponseList {
 
     private Integer id;
-    private Timestamp timestamp;
+    private long timestamp;
     private PostResponseListUser user;
     private String title;
     private String announce;

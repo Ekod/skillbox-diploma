@@ -1,6 +1,7 @@
 package skillbox.diploma.utils;
 
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Component;
 import skillbox.diploma.api.response.PostResponseList;
 import skillbox.diploma.api.response.PostResponseListUser;
 import skillbox.diploma.model.Post;
@@ -8,12 +9,13 @@ import skillbox.diploma.repository.PostRepository;
 
 import java.util.List;
 
+@Component
 public class PostServiceUtils {
 
-    private final static int LIKE_VALUE = 1;
-    private final static int DISLIKE_VALUE = -1;
+    private final int LIKE_VALUE = 1;
+    private final int DISLIKE_VALUE = -1;
 
-    public static PostResponseList mapToPost(Post post) {
+    public PostResponseList mapToPost(Post post) {
         return PostResponseList
                 .builder()
                 .id(post.getId())
@@ -28,7 +30,7 @@ public class PostServiceUtils {
                 .build();
     }
 
-    private static PostResponseListUser constructUser(Post post) {
+    private PostResponseListUser constructUser(Post post) {
         return PostResponseListUser
                 .builder()
                 .id(post.getUser().getId())
@@ -36,7 +38,7 @@ public class PostServiceUtils {
                 .build();
     }
 
-    private static String postAnnouncementCreator(Post post) {
+    private String postAnnouncementCreator(Post post) {
         String htmlRemoverRegEx = "<[^>]*>";
         String noHTMLAnnounce = post.getText().replaceAll(htmlRemoverRegEx, "").trim();
         if (noHTMLAnnounce.length() > 150) {
@@ -45,11 +47,11 @@ public class PostServiceUtils {
         return noHTMLAnnounce;
     }
 
-    private static int getLikesAndDislikes(Post post, int value) {
+    private int getLikesAndDislikes(Post post, int value) {
         return (int) post.getPostVotes().stream().filter(vote -> vote.getValue() == value).count();
     }
 
-    public static List<Post> requestsWithSorting(String mode, Pageable pageable, PostRepository postRepository) {
+    public List<Post> requestsWithSorting(String mode, Pageable pageable, PostRepository postRepository) {
         switch (mode) {
             case "recent":
                 return postRepository.findAllByIsActiveAndModerationStatusOrderByTimeAsc(pageable);

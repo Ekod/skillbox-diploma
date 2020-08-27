@@ -3,6 +3,7 @@ package skillbox.diploma.controller;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import skillbox.diploma.api.response.SettingsResponse;
 import skillbox.diploma.api.response.TagResponse;
@@ -33,5 +34,10 @@ public class ApiGeneralController {
                 false,
                 false
         );
+    }
+
+    @RequestMapping(method = {RequestMethod.OPTIONS, RequestMethod.GET}, value = "/**/{path:[^\\\\.]*}")
+    public String redirectToIndex() {
+        return "forward:/";
     }
 }

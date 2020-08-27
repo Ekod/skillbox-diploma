@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,7 +34,7 @@ public class ApiPostController {
             @RequestParam(name = "limit", defaultValue = "20") int limit,
             @RequestParam(name = "query", defaultValue = "20") String query
     ) {
-        PostResponse returnValue = postService.getPostsSearch(offset, limit, query);
+        PostResponse returnValue = postService.getPostsBySearch(offset, limit, query);
         return new ResponseEntity<>(returnValue, HttpStatus.OK);
     }
 
@@ -43,7 +44,7 @@ public class ApiPostController {
             @RequestParam(name = "limit", defaultValue = "20") int limit,
             @RequestParam(name = "date") String date
     ) {
-        PostResponse returnValue = postService.getPostsDate(offset, limit, date);
+        PostResponse returnValue = postService.getPostsByDate(offset, limit, date);
         return new ResponseEntity<>(returnValue, HttpStatus.OK);
     }
 
@@ -53,8 +54,13 @@ public class ApiPostController {
             @RequestParam(name = "limit", defaultValue = "20") int limit,
             @RequestParam(name = "tag") String tag
     ) {
-        PostResponse returnValue = postService.getPostsTag(offset, limit, tag);
+        PostResponse returnValue = postService.getPostsByTag(offset, limit, tag);
         return new ResponseEntity<>(returnValue, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public void getPostById(@PathVariable String id) {
+        postService.getPostById(id);
     }
 }
 

@@ -8,7 +8,6 @@ import skillbox.diploma.api.response.PostResponse;
 import skillbox.diploma.api.response.PostResponseList;
 import skillbox.diploma.model.Post;
 import skillbox.diploma.model.Tag;
-import skillbox.diploma.model.enums.PostTypes;
 import skillbox.diploma.repository.PostRepository;
 import skillbox.diploma.repository.TagRepository;
 import skillbox.diploma.service.PostService;
@@ -79,10 +78,8 @@ public class PostServiceImpl implements PostService {
         List<Tag> tagList = tagRepository.findAllByName(tag, pageable);
         for (Tag tags : tagList) {
             tags.getPostList().stream().forEach(post -> {
-                if (post.getIsActive() == 1 && post.getModerationStatus() == PostTypes.ACCEPTED) {
-                    PostResponseList postResponseList = postServiceUtils.mapToPost(post);
-                    listOfPosts.add(postResponseList);
-                }
+                PostResponseList postResponseList = postServiceUtils.mapToPost(post);
+                listOfPosts.add(postResponseList);
             });
         }
         responsePost.setCount(listOfPosts.size());

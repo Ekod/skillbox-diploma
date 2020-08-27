@@ -24,14 +24,16 @@ public class PostServiceImpl implements PostService {
     PostRepository postRepository;
     TagRepository tagRepository;
 
+    PostServiceUtils postServiceUtils;
+
     @Override
     public PostResponse getPosts(int offset, int limit, String mode) {
         Pageable pageable = PageRequest.of(offset, limit);
         PostResponse responsePost = new PostResponse();
         ArrayList<PostResponseList> listOfPosts = new ArrayList<>();
-        List<Post> allPosts = PostServiceUtils.requestsWithSorting(mode, pageable, postRepository);
+        List<Post> allPosts = postServiceUtils.requestsWithSorting(mode, pageable, postRepository);
         for (Post post : allPosts) {
-            PostResponseList postResponseList = PostServiceUtils.mapToPost(post);
+            PostResponseList postResponseList = postServiceUtils.mapToPost(post);
             listOfPosts.add(postResponseList);
         }
         responsePost.setCount(listOfPosts.size());
@@ -46,7 +48,7 @@ public class PostServiceImpl implements PostService {
         ArrayList<PostResponseList> listOfPosts = new ArrayList<>();
         List<Post> allPosts = postRepository.findAllByTitleOrTextAndIsActiveAndModerationStatus(query, pageable);
         for (Post post : allPosts) {
-            PostResponseList postResponseList = PostServiceUtils.mapToPost(post);
+            PostResponseList postResponseList = postServiceUtils.mapToPost(post);
             listOfPosts.add(postResponseList);
         }
         responsePost.setCount(listOfPosts.size());
@@ -61,7 +63,7 @@ public class PostServiceImpl implements PostService {
         ArrayList<PostResponseList> listOfPosts = new ArrayList<>();
         List<Post> allPosts = postRepository.findAllByTimeAndIsActiveAndModerationStatus(date, pageable);
         for (Post post : allPosts) {
-            PostResponseList postResponseList = PostServiceUtils.mapToPost(post);
+            PostResponseList postResponseList = postServiceUtils.mapToPost(post);
             listOfPosts.add(postResponseList);
         }
         responsePost.setCount(listOfPosts.size());
@@ -78,7 +80,7 @@ public class PostServiceImpl implements PostService {
         for (Tag tags : tagList) {
             tags.getPostList().stream().forEach(post -> {
                 if (post.getIsActive() == 1 && post.getModerationStatus() == PostTypes.ACCEPTED) {
-                    PostResponseList postResponseList = PostServiceUtils.mapToPost(post);
+                    PostResponseList postResponseList = postServiceUtils.mapToPost(post);
                     listOfPosts.add(postResponseList);
                 }
             });

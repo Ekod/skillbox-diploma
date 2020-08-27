@@ -27,7 +27,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                             .antMatchers(HttpMethod.POST, "/api/post/like").authenticated()
                             .antMatchers(HttpMethod.POST, "/api/post/dislike").authenticated()
                             .antMatchers(HttpMethod.PUT, "/api/settings").authenticated()
-                            .mvcMatchers(HttpMethod.PUT, "/api/post/{ID}").authenticated();
+                            .mvcMatchers(HttpMethod.PUT, "/api/post/{id}").authenticated();
                 })
                 .authorizeRequests()
                 .anyRequest()

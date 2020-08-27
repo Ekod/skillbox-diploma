@@ -13,6 +13,7 @@ import java.util.List;
 public interface TagRepository extends PagingAndSortingRepository<Tag, Integer> {
 
     @Query(value = "select t from tags t join tag2post on t.id = tag2post.tagId join posts on tag2post.postId = posts.id " +
-            "where tags.name = :tagName and posts.isActive = 1 and posts.moderationStatus = 'ACCEPTED'")
+            "where tags.name = :tagName and posts.isActive = 1 and posts.moderationStatus = 'ACCEPTED' " +
+            "and posts.time <= current_timestamp")
     List<Tag> findAllByName(@Param("tagName") String tag, Pageable pageable);
 }

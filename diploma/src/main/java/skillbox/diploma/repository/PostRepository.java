@@ -43,4 +43,9 @@ public interface PostRepository extends PagingAndSortingRepository<Post, Integer
             "and p.time <= current_timestamp")
     Post findByIdAndIsActiveAndModerationStatus(@Param("id") int id);
 
+    @Query(value = "select t from tags t join tag2post on t.id = tag2post.tagId join posts on tag2post.postId = posts.id " +
+            "where t.name = :tagName and posts.isActive = 1 and posts.moderationStatus = 'ACCEPTED' " +
+            "and posts.time <= current_timestamp")
+    List<Post> findAll(@Param("tagName") String tag, Pageable pageable);
+
 }

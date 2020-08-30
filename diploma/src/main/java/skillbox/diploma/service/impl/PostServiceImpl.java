@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import skillbox.diploma.api.response.PostResponse;
 import skillbox.diploma.api.response.PostResponseList;
 import skillbox.diploma.model.Post;
-import skillbox.diploma.model.Tag;
 import skillbox.diploma.repository.PostRepository;
 import skillbox.diploma.repository.TagRepository;
 import skillbox.diploma.service.PostService;
@@ -75,12 +74,10 @@ public class PostServiceImpl implements PostService {
         Pageable pageable = PageRequest.of(offset, limit);
         PostResponse responsePost = new PostResponse();
         ArrayList<PostResponseList> listOfPosts = new ArrayList<>();
-        List<Tag> tagList = tagRepository.findAllByName(tag, pageable);
-        for (Tag tags : tagList) {
-            tags.getPostList().stream().forEach(post -> {
-                PostResponseList postResponseList = postServiceUtils.mapToPost(post);
-                listOfPosts.add(postResponseList);
-            });
+        List<Post> allPosts = postRepository.findAll(tag, pageable);
+        for (Post post : allPosts) {
+            PostResponseList postResponseList = postServiceUtils.mapToPost(post);
+            listOfPosts.add(postResponseList);
         }
         responsePost.setCount(listOfPosts.size());
         responsePost.setPosts(listOfPosts);
